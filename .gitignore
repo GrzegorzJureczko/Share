@@ -11,3 +11,6 @@ project
 
 env/.env
 staticfiles
+
+share/migrations
+db.sqlite3

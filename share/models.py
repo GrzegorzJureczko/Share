@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name = models.CharField(max_length=40)
 
+    objects = models.Manager()
+
     def __str__(self):
         return self.name
 
@@ -18,6 +20,8 @@ class Institution(models.Model):
         ('local', 'zbiórka lokalna'),
     ])
     categories = models.ManyToManyField('Category')
+
+    objects = models.Manager()
 
     def __str__(self):
         return self.name
@@ -33,7 +37,9 @@ class Donation(models.Model):
     zip_code = models.CharField(max_length=20)
     pick_up_date = models.DateField()
     pick_up_time = models.TimeField()
-    user = models.ForeignKey(User, null=True, default=None, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    objects = models.Manager()
 
     def __str__(self):
-        return self.quantity
+        return f'{self.institution}, {self.quantity}, {self.address}'
