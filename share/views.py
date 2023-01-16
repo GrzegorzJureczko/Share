@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from . import models
 from django.db.models import Sum
+from . import forms
 
 
 # Create your views here.
@@ -10,6 +11,8 @@ from django.db.models import Sum
 class LandingPageView(View):
     def get(self, request):
         donation_quantity = models.Donation.objects.aggregate(Sum('quantity'))['quantity__sum']
+        if donation_quantity == None:
+            donation_quantity = 0
         supported_organizations = len(models.Donation.objects.values('institution').distinct())
 
         foundations = models.Institution.objects.filter(type='foundation')
@@ -35,4 +38,15 @@ class LoginView(View):
 
 class RegisterView(View):
     def get(self, request):
-        return render(request, 'share/register.html')
+        form = forms.UserForm()
+        return render(request, 'share/register.html', {'form': form})
+
+    def post(self, request):
+        form = forms.UserForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = True
+            user.save()
+            return redirect('share:login')
+
+        return render(request, 'share/register.html', {'form': form})
