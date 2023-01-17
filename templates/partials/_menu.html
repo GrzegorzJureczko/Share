@@ -1,33 +1,45 @@
-{% if request.path == '/' or request.path == '/add/'%}
+{% if request.path == '/' or request.path == '/add/' %}
 
-            <ul class="nav--actions">
-                <li><a href="{% url 'share:login' %}" class="btn btn--small btn--without-border">Zaloguj</a></li>
-                <li><a href="{% url 'share:register' %}" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+{% if user.is_authenticated %}
+    <ul class="nav--actions">
+        <li class="logged-user">
+            Witaj {{ request.user }}
+            <ul class="dropdown">
+                <li><a href="#">Profil</a></li>
+                <li><a href="#">Ustawienia</a></li>
+                <li><a href="{% url 'share:logout' %}">Wyloguj</a></li>
             </ul>
-
-            <ul>
-                <li><a href="{% url 'share:index' %}" class="btn btn--without-border active">Start</a></li>
-                <li><a href="{% url 'share:index' %}#steps" class="btn btn--without-border">O co chodzi?</a></li>
-                <li><a href="{% url 'share:index' %}about-us" class="btn btn--without-border">O nas</a></li>
-                <li><a href="{% url 'share:index' %}#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
-                <li><a href="{% url 'share:add_donation' %}" class="btn btn--without-border">Przekaż dary</a></li>
-                <li><a href="{% url 'share:index' %}#contact" class="btn btn--without-border">Kontakt</a></li>
-            </ul>
+        </li>
+    </ul>
+{% else %}
+    <ul class="nav--actions">
+        <li><a href="{% url 'share:login' %}" class="btn btn--small btn--without-border">Zaloguj</a></li>
+        <li><a href="{% url 'share:register' %}" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+    </ul>
+{% endif %}
+    <ul>
+        <li><a href="{% url 'share:index' %}" class="btn btn--without-border active">Start</a></li>
+        <li><a href="{% url 'share:index' %}#steps" class="btn btn--without-border">O co chodzi?</a></li>
+        <li><a href="{% url 'share:index' %}about-us" class="btn btn--without-border">O nas</a></li>
+        <li><a href="{% url 'share:index' %}#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
+        <li><a href="{% url 'share:add_donation' %}" class="btn btn--without-border">Przekaż dary</a></li>
+        <li><a href="{% url 'share:index' %}#contact" class="btn btn--without-border">Kontakt</a></li>
+    </ul>
 
 
 {% else %}
 
-            <ul class="nav--actions">
-                <li><a href="{% url 'share:login' %}">Zaloguj</a></li>
-                <li class="highlighted"><a href="{% url 'share:register' %}">Załóż konto</a></li>
-            </ul>
+    <ul class="nav--actions">
+        <li><a href="{% url 'share:login' %}">Zaloguj</a></li>
+        <li class="highlighted"><a href="{% url 'share:register' %}">Załóż konto</a></li>
+    </ul>
 
-            <ul>
-                <li><a href="{% url 'share:index' %}">Start</a></li>
-                <li><a href="{% url 'share:index' %}#steps">O co chodzi?</a></li>
-                <li><a href="{% url 'share:index' %}#about-us">O nas</a></li>
-                <li><a href="{% url 'share:index' %}#help">Fundacje i organizacje</a></li>
-                <li><a href="{% url 'share:index' %}#contact">Kontakt</a></li>
-            </ul>
+    <ul>
+        <li><a href="{% url 'share:index' %}">Start</a></li>
+        <li><a href="{% url 'share:index' %}#steps">O co chodzi?</a></li>
+        <li><a href="{% url 'share:index' %}#about-us">O nas</a></li>
+        <li><a href="{% url 'share:index' %}#help">Fundacje i organizacje</a></li>
+        <li><a href="{% url 'share:index' %}#contact">Kontakt</a></li>
+    </ul>
 
 {% endif %}
