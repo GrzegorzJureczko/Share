@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
 from . import models
 from django.db.models import Sum
 from . import forms
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -27,9 +29,14 @@ class LandingPageView(View):
                        'categories': categories})
 
 
-class AddDonationView(View):
+class AddDonationView(LoginRequiredMixin, View):
+    login_url = 'share:login'
+    redirect_field_name = 'share:add_donation'
+
     def get(self, request):
-        return render(request, 'share/form.html')
+        categories = models.Category.objects.all()
+        organizations = models.Institution.objects.all()
+        return render(request, 'share/form.html', {'categories': categories, 'organizations': organizations})
 
 
 class LoginView(View):

@@ -139,3 +139,6 @@ STATICFILES_FINDERS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'share.User'
+
+LOGIN_REDIRECT_URL = 'share.Login'
+LOGIN_URL = 'share.Login'
