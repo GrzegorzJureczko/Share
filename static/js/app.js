@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // step2 -> step3
         const buttonStep2 = document.querySelector('#btn-step-2')
         const bagsCheckbox = document.querySelector('#step-2').querySelector('label')
+        let noOfBags
         const emptyBags = document.getElementById('empty-bags')
         const organizationsCheckbox = document.querySelector('#step-3')
         const organizationsAll = organizationsCheckbox.querySelectorAll('label')
@@ -33,7 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const categoriesNoMatch = document.getElementById('catategories-no-match')
 
         buttonStep2.addEventListener('click', (e) => {
-            if (bagsCheckbox.querySelector('input').value < 1) {
+            noOfBags = bagsCheckbox.querySelector('input').value
+            if (noOfBags < 1) {
                 emptyBags.style.display = 'flex'
                 e.stopImmediatePropagation()
             } else {
@@ -59,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     orgranizationList.push(organization)
                 }
             })
-            console.log(orgranizationList.length)
             if (orgranizationList.length < 1) {
                 categoriesNoMatch.style.display = 'flex'
             } else {
@@ -67,14 +68,83 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
 
+        // step3 -> step4
         const buttonStep3 = document.querySelector('#btn-step-3')
-        const organizationCheckBox = document.querySelector('#step-3')
+        const noOrganization = document.getElementById('no_organization_picked')
+        let organizationChosen
 
         buttonStep3.addEventListener('click', (e) => {
-            const a = organizationCheckBox.querySelector('input')
-            console.log(a)
+            const radioChecked = document.querySelector('input[name = "org"]:checked')
+            organizationChosen = document.querySelector('input[name = "org"]:checked').value
+            if (radioChecked == null) {
+                noOrganization.style.display = 'flex'
+                e.stopImmediatePropagation()
+            } else {
+                noOrganization.style.display = 'none'
+            }
+            console.log(noOfBags)
+            console.log(parseInt(noOfBags)===1)
+        })
+
+        // step4 -> step5
+        const buttonStep4 = document.querySelector('#btn-step-4')
+
+        buttonStep4.addEventListener('click', (e) => {
+            const address = document.querySelector("[name = 'address']").value
+            const city = document.querySelector("[name = 'city']").value
+            const postcode = document.querySelector("[name = 'postcode']").value
+            const phone = document.querySelector("[name = 'phone']").value
+            const data = document.querySelector("[name = 'data']").value
+            const time = document.querySelector("[name = 'time']").value
+            const more_info = document.querySelector("[name = 'more_info']").value
+
+            const formAddress = document.getElementById('address')
+            const formDate = document.getElementById('date')
+            const formBags = document.getElementById('sum_bags')
+            const formOrg = document.getElementById('sum_org')
+
+            const liAddress = document.createElement('li')
+            liAddress.innerText = address
+            formAddress.appendChild(liAddress)
+
+            const liCity = document.createElement('li')
+            liCity.innerText = city
+            formAddress.appendChild(liCity)
+
+            const liPostcode = document.createElement('li')
+            liPostcode.innerText = postcode
+            formAddress.appendChild(liPostcode)
+
+            const liPhone = document.createElement('li')
+            liPhone.innerText = phone
+            formAddress.appendChild(liPhone)
+
+            const liData = document.createElement('li')
+            liData.innerText = data
+            formDate.appendChild(liData)
+
+            const liTime = document.createElement('li')
+            liTime.innerText = time
+            formDate.appendChild(liTime)
+
+            const liMoreInfo = document.createElement('li')
+            liMoreInfo.innerText = more_info
+            formDate.appendChild(liMoreInfo)
+
+            if (noOfBags == 1){
+                formBags.innerText = `${noOfBags} worek`
+            } else if (noOfBags == 2 || noOfBags == 3 || noOfBags == 4){
+                formBags.innerText = `${noOfBags} worki`
+            } else {
+                formBags.innerText = `${noOfBags} worków`
+            }
+
+            console.log(organizationChosen)
+            formOrg.innerText = `Dla fundacji ${organizationChosen} w mieście ${city}`
+
 
         })
+
     }
 
 

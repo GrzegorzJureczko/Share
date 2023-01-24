@@ -120,7 +120,7 @@
                     {% for organization in organizations %}
                         <div class="form-group form-group--checkbox">
                             <label>
-                                <input type="radio" name='org' value={{ organization.id }}/>
+                                <input type="radio" name='org' value={{ organization.name }}/>
                                 <span class="checkbox radio"></span>
                                 <span class="description">
                   <div class="title">{{ organization.name }}</div>
@@ -136,11 +136,12 @@
                         <button type="button" class="btn next-step" id="btn-step-3">Dalej</button>
                     </div>
                   <div class="form-error" id="catategories-no-match">Żadna fundacja nie obsługuje wszystkich wybranych kategorii. Wróć do punktu 1 i zmień wybór</div>
+                  <div class="form-error" id="no_organization_picked">Wybierz organizację</div>
                 </div>
 
                 <!-- STEP 5 -->
                 <div data-step="4">
-                    <h3>Podaj adres oraz termin odbioru rzecz przez kuriera:</h3>
+                    <h3>Podaj adres oraz termin odbioru rzeczy przez kuriera:</h3>
 
                     <div class="form-section form-section--columns">
                         <div class="form-section--column">
@@ -191,7 +192,7 @@
                 </div>
 
                 <!-- STEP 6 -->
-                <div data-step="5">
+                <div data-step="5" id="step-5">
                     <h3>Podsumowanie Twojej darowizny</h3>
 
                     <div class="summary">
@@ -200,15 +201,15 @@
                             <ul>
                                 <li>
                                     <span class="icon icon-bag"></span>
-                                    <span class="summary--text"
-                                    >4 worki ubrań w dobrym stanie dla dzieci</span
+                                    <span class="summary--text" id="sum_bags"
+                                    ></span
                                     >
                                 </li>
 
                                 <li>
                                     <span class="icon icon-hand"></span>
-                                    <span class="summary--text"
-                                    >Dla fundacji "Mam marzenie" w Warszawie</span
+                                    <span class="summary--text" id=sum_org
+                                    ></span
                                     >
                                 </li>
                             </ul>
@@ -217,20 +218,15 @@
                         <div class="form-section form-section--columns">
                             <div class="form-section--column">
                                 <h4>Adres odbioru:</h4>
-                                <ul>
-                                    <li>Prosta 51</li>
-                                    <li>Warszawa</li>
-                                    <li>99-098</li>
-                                    <li>123 456 789</li>
+                                <ul id="address">
+
                                 </ul>
                             </div>
 
                             <div class="form-section--column">
                                 <h4>Termin odbioru:</h4>
-                                <ul>
-                                    <li>13/12/2018</li>
-                                    <li>15:40</li>
-                                    <li>Brak uwag</li>
+                                <ul id="date">
+
                                 </ul>
                             </div>
                         </div>
