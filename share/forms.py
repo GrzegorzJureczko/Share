@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 
 from . import models
@@ -33,3 +34,11 @@ class UserForm(forms.ModelForm):
             user.save()
 
         return user
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(label='', widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Hasło'}))
+
+    class Meta:
+        fields = ('email', 'username')

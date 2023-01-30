@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views import View
 from . import models
@@ -33,7 +34,22 @@ class AddDonationView(View):
 
 class LoginView(View):
     def get(self, request):
-        return render(request, 'share/login.html')
+        form = forms.LoginForm(request)
+        return render(request, 'share/login.html', {'form': form})
+
+    def post(self, request):
+        form = forms.LoginForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            user = authenticate(email=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('share:index')
+
+        return redirect('share:register')
 
 
 class RegisterView(View):
@@ -50,3 +66,9 @@ class RegisterView(View):
             return redirect('share:login')
 
         return render(request, 'share/register.html', {'form': form})
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('share:index')
